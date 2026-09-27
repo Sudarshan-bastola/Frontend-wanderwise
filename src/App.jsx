@@ -2,9 +2,9 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Landing from "./pages/Landing";
 import About from "./pages/About";
-import Contact from "./pages/Contact";
+
 import Login from "./pages/Login";
-import Register from "./pages/Register";
+
 import useAuth from "./hooks/useAuth";
 import { jwtDecode } from "jwt-decode";
 import Dashboard from "./pages/Dashboard";
@@ -16,6 +16,8 @@ import EditTrip from "./pages/trips/EditTrip";
 import Baggage from "./pages/baggage/Baggage";
 import BaggageDetails from "./pages/baggage/BaggageDetails";
 import AcceptInvitation from "./pages/AcceptInvitation";
+import Contact from "./pages/contact";
+import Register from "./pages/Register";
 
 const App = () => {
   const { token, onLogout } = useAuth();
