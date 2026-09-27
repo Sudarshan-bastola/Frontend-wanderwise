@@ -19,6 +19,7 @@ import AcceptInvitation from "./pages/AcceptInvitation";
 import Contact from "./pages/contact";
 import Register from "./pages/Register";
 
+
 const App = () => {
   const { token, onLogout } = useAuth();
 
