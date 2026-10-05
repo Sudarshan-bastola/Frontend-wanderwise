@@ -15,10 +15,11 @@ import BaggageDetails from "./pages/baggage/BaggageDetails";
 import AcceptInvitation from "./pages/AcceptInvitation";
 import Contact from "./pages/contact";
 
-import Register from "./pages/register";
+
 import AddItinerary from "./pages/itinerary/AddItinerary";
 import ItineraryDetails from "./pages/itinerary/ItineraryDetails";
 import Itineraries from "./pages/itinerary/itinerary";
+import Register from "./pages/register";
 
 
 const App = () => {
