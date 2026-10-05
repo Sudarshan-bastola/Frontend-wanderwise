@@ -19,7 +19,7 @@ import Contact from "./pages/contact";
 import AddItinerary from "./pages/itinerary/AddItinerary";
 import ItineraryDetails from "./pages/itinerary/ItineraryDetails";
 import Itineraries from "./pages/itinerary/itinerary";
-import Register from "./pages/register";
+import Register from "./pages/Register";
 
 
 const App = () => {
