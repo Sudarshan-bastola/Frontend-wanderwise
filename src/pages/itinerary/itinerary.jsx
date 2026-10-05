@@ -1,25 +1,22 @@
 import { useEffect, useState } from "react";
-import { CalendarDays, MapPin, Plus } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../components/ui/card";
-import { Button } from "../components/ui/button";
-import api from "../api/axios";
+import { useParams } from "react-router-dom";
 import { toast } from "sonner";
-import { formatDate } from "../lib/utils";
+import api from "../../api/axios";
+import { CalendarDays, MapPin, Plus } from "lucide-react";
+import { Button } from "../../components/ui/button";
+import { Card,CardContent,CardDescription,CardHeader,CardTitle } from "../../components/ui/card";
+import { formatDate } from "../../lib/utils";
+
 
 const Itineraries = () => {
+  const { tripId } = useParams();
   const [itineraries, setItineraries] = useState([]);
   const [dependancy, setDependency] = useState(0);
 
   useEffect(() => {
     const fetchItineraries = async () => {
       try {
-        const response = await api.get("/itineraries");
+        const response = await api.get(`/trips/${tripId}/itinerary`);
         setItineraries(response.data);
       } catch (error) {
         toast.error("Some error occured while fetching itineraries");
@@ -28,7 +25,7 @@ const Itineraries = () => {
     };
 
     fetchItineraries();
-  }, [dependancy]);
+  }, [tripId, dependancy]);
 
   return (
     <div className="min-h-screen bg-purple-50/60 px-4 py-12 sm:px-6 sm:py-16 md:px-10 md:py-20 lg:px-20 lg:py-24">
@@ -38,12 +35,13 @@ const Itineraries = () => {
             <CardTitle className="text-xl sm:text-2xl">
               Your Itineraries
             </CardTitle>
+
             <CardDescription className="text-sm sm:text-base">
               View and manage your travel itineraries.
             </CardDescription>
           </div>
 
-          <a href="/itineraries/add" className="w-full md:w-auto">
+          <a href={`/trips/${tripId}/itinerary/add`}>
             <Button className="w-full md:w-auto">
               <Plus />
               Add Itinerary
@@ -65,7 +63,7 @@ const Itineraries = () => {
                   Create an itinerary to start planning your activities.
                 </p>
 
-                <a href="/itineraries/add" className="mt-6 inline-block">
+                <a href={`/trips/${tripId}/itinerary/add`}>
                   <Button>
                     <Plus />
                     Create Itinerary
@@ -80,7 +78,7 @@ const Itineraries = () => {
                 >
                   <CardHeader className="border-b px-4 sm:px-6">
                     <CardTitle className="wrap-break-word text-lg sm:text-xl">
-                      {itinerary.title || `Day ${itinerary.day}`}
+                      {itinerary.title}
                     </CardTitle>
 
                     <CardDescription className="flex flex-wrap items-center gap-1 text-sm">
@@ -101,7 +99,7 @@ const Itineraries = () => {
                     </div>
 
                     <a
-                      href={`/itineraries/${itinerary._id}`}
+                      href={`/trips/${tripId}/itinerary/${itinerary._id}`}
                       className="block pt-2"
                     >
                       <Button className="w-full">View Itinerary</Button>

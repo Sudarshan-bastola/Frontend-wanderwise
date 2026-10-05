@@ -1,24 +1,19 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../components/ui/card";
-import api from "../api/axios";
+import api from "../../api/axios";
 import { toast } from "sonner";
-import ActivityCard from "../components/common/ActivityCard";
+import ActivityCard from "../../components/common/ActivityCard";
+import { Card,CardContent,CardDescription,CardTitle,CardHeader } from "../../components/ui/card";
+
 
 const ItineraryDetails = () => {
-  const { id } = useParams();
+  const { tripId, id } = useParams();
   const [itinerary, setItinerary] = useState(null);
 
   useEffect(() => {
     const fetchItinerary = async () => {
       try {
-        const response = await api.get(`/itineraries/${id}`);
+        const response = await api.get(`/trips/${tripId}/itinerary/${id}`);
         setItinerary(response.data);
       } catch (error) {
         toast.error("Some error occured while fetching itinerary");
@@ -27,7 +22,7 @@ const ItineraryDetails = () => {
     };
 
     fetchItinerary();
-  }, [id]);
+  }, [tripId, id]);
 
   if (!itinerary) {
     return (
@@ -41,8 +36,8 @@ const ItineraryDetails = () => {
     <div className="min-h-screen bg-purple-50/60 px-4 py-8 sm:px-6 sm:py-12 md:px-10 lg:px-20 lg:py-16">
       <Card className="mx-auto w-full max-w-5xl">
         <CardHeader className="border-b px-4 sm:px-6">
-          <CardTitle className="break-words text-2xl sm:text-3xl">
-            {itinerary.title || `Day ${itinerary.day}`}
+          <CardTitle className="wrap-break-word text-2xl sm:text-3xl">
+            {itinerary.title}
           </CardTitle>
 
           <CardDescription className="text-sm sm:text-base">

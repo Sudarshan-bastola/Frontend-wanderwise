@@ -85,7 +85,10 @@ const TripInfo = ({ trip }) => {
           </div>
 
           <div className="flex w-full flex-col gap-2 sm:flex-row md:w-auto md:shrink-0">
-            <a href={`/trips/edit/${trip._id}`} className="w-full sm:w-auto">
+            <a
+              href={`/trips/${trip._id}/itinerary`}
+              className="w-full sm:w-auto"
+            >
               <Button variant="outline" size="sm" className="w-full">
                 <Edit className="mr-2 h-4 w-4" />
                 Edit Trip
@@ -224,7 +227,9 @@ const TripInfo = ({ trip }) => {
                   className="flex flex-col gap-2 rounded-lg bg-gray-50 p-3 sm:flex-row sm:items-center sm:justify-between"
                 >
                   <div className="min-w-0">
-                    <p className="wrap-break-word font-medium">{expense.name}</p>
+                    <p className="wrap-break-word font-medium">
+                      {expense.name}
+                    </p>
 
                     <p className="text-sm text-gray-600">
                       {new Date(expense.date).toLocaleString()}

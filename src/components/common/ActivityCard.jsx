@@ -2,6 +2,7 @@ import { CalendarClock, MapPin } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 
+
 const ActivityCard = ({ activity }) => {
   return (
     <Card className="w-full">

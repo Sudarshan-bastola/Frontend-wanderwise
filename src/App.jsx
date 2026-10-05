@@ -14,10 +14,12 @@ import Baggage from "./pages/baggage/Baggage";
 import BaggageDetails from "./pages/baggage/BaggageDetails";
 import AcceptInvitation from "./pages/AcceptInvitation";
 import Contact from "./pages/contact";
-import Itineraries from "./pages/itinerary/itinerary";
+
 import Register from "./pages/register";
 import AddItinerary from "./pages/itinerary/AddItinerary";
 import ItineraryDetails from "./pages/itinerary/ItineraryDetails";
+import Itineraries from "./pages/itinerary/itinerary";
+
 
 const App = () => {
   const { token, onLogout } = useAuth();
@@ -70,9 +72,17 @@ const App = () => {
           <Route path="/baggage" element={<Baggage />} />
           <Route path="/baggage/:id" element={<BaggageDetails />} />
 
-          <Route path="/itineraries" element={<Itineraries />} />
-          <Route path="/itineraries/add" element={<AddItinerary />} />
-          <Route path="/itineraries/:id" element={<ItineraryDetails />} />
+          <Route path="/trips/:tripId/itinerary" element={<Itineraries />} />
+
+          <Route
+            path="/trips/:tripId/itinerary/add"
+            element={<AddItinerary />}
+          />
+
+          <Route
+            path="/trips/:tripId/itinerary/:id"
+            element={<ItineraryDetails />}
+          />
 
           <Route
             path="/trips/:id/invite/accept"

@@ -1,22 +1,15 @@
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
+import z from "zod";
+import useAuth from "../hooks/useAuth";
 import { Controller, useForm } from "react-hook-form";
-import * as z from "zod";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../components/ui/card";
-import { Field, FieldError, FieldLabel } from "../components/ui/field";
-import { Input } from "../components/ui/input";
-import { Button } from "../components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
 import api from "../api/axios";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
+import { Card,CardAction,CardContent,CardDescription,CardTitle,CardFooter, CardHeader } from "../components/ui/card";
+import { Input } from "../components/ui/input";
+import { Field, FieldError, FieldLabel } from "../components/ui/field";
+import { Button } from "../components/ui/button";
+
 
 const formSchema = z
   .object({

@@ -94,7 +94,7 @@ const Trip = () => {
                   <Card key={trip._id} className="min-w-0">
                     <CardHeader className="flex flex-row items-start justify-between gap-3 border-b px-4 sm:px-6">
                       <div className="min-w-0">
-                        <CardTitle className="wrap-break-word text-lg sm:text-xl">
+                        <CardTitle className="word text-lg sm:text-xl">
                           {trip.title}
                         </CardTitle>
                         <CardDescription className="text-sm">

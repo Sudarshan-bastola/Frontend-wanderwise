@@ -1,23 +1,14 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import { Controller, useForm } from "react-hook-form";
-import * as z from "zod";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../components/ui/card";
-import { Field, FieldError, FieldLabel } from "../components/ui/field";
-import { Input } from "../components/ui/input";
-import { Button } from "../components/ui/button";
-import api from "../api/axios";
-import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import { Card,CardAction,CardContent,CardDescription,CardFooter,CardHeader,CardTitle } from "../components/ui/card";
+import api from "../api/axios";
+import { Input } from "../components/ui/input";
+import { Field, FieldError, FieldLabel } from "../components/ui/field";
+import { Button } from "../components/ui/button";
+import z from "zod";
 
 const formSchema = z.object({
   email: z.string().email().min(5, "Must be atleast 5 characters").trim(),

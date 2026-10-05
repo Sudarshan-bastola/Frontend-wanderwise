@@ -1,6 +1,7 @@
 import useAuth from "../../hooks/useAuth";
 import CustomButton from "./CustomButton";
 
+
 const AppNavbar = () => {
   const { onLogout } = useAuth();
 
@@ -29,7 +30,7 @@ const AppNavbar = () => {
           </a>
 
           <a
-            href="/itineraries"
+            href="/trips"
             className="rounded-lg px-3 py-2 text-sm transition hover:bg-purple-50 hover:text-purple-700 sm:px-4 sm:text-base"
           >
             Itineraries
