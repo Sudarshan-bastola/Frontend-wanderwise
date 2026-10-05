@@ -1,4 +1,3 @@
-
 import {
   Card,
   CardContent,
@@ -37,6 +36,7 @@ const TripInfo = ({ trip }) => {
       toast.error("Some error occured");
     }
   };
+
   const calculateDaysUntilTrip = () => {
     if (!trip) return 0;
     const today = new Date();
@@ -45,6 +45,7 @@ const TripInfo = ({ trip }) => {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
   };
+
   const calculateTripDuration = () => {
     if (!trip) return 0;
     const startDate = new Date(trip.startDate);
@@ -70,29 +71,32 @@ const TripInfo = ({ trip }) => {
   const remainingBudget = getRemainingBudget();
 
   return (
-    <Card className="mb-6">
-      <CardHeader>
-        <div className="flex items-start justify-between">
-          <div>
-            <CardTitle className="text-3xl font-bold text-gray-900 mb-2">
+    <Card className="mb-6 w-full">
+      <CardHeader className="px-4 sm:px-6">
+        <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+          <div className="min-w-0">
+            <CardTitle className="mb-2 wrap-break-word text-2xl font-bold text-gray-900 sm:text-3xl">
               {trip.title}
             </CardTitle>
-            <CardDescription className="text-lg">
+
+            <CardDescription className="wrap-break-word text-base sm:text-lg">
               {trip.description}
             </CardDescription>
           </div>
-          <div className="flex items-center space-x-4">
-            <a href={`/trips/edit/${trip._id}`}>
-              <Button variant="outline" size="sm">
+
+          <div className="flex w-full flex-col gap-2 sm:flex-row md:w-auto md:shrink-0">
+            <a href={`/trips/edit/${trip._id}`} className="w-full sm:w-auto">
+              <Button variant="outline" size="sm" className="w-full">
                 <Edit className="mr-2 h-4 w-4" />
                 Edit Trip
               </Button>
             </a>
+
             <Button
               variant="outline"
               size="sm"
               onClick={deleteTrip}
-              className={"text-red-600 hover:text-red-600 hover:bg-red-50"}
+              className="w-full text-red-600 hover:bg-red-50 hover:text-red-600 sm:w-auto"
             >
               <Trash2 className="mr-2 h-4 w-4" />
               Delete
@@ -100,11 +104,12 @@ const TripInfo = ({ trip }) => {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="space-y-6">
-        {/* Trip Status */}
-        <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
+
+      <CardContent className="space-y-6 px-4 sm:px-6">
+        <div className="flex flex-col gap-3 rounded-lg bg-blue-50 p-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center space-x-3">
-            <Clock className="h-6 w-6 text-blue-600" />
+            <Clock className="h-6 w-6 shrink-0 text-blue-600" />
+
             <div>
               <p className="font-semibold text-blue-900">
                 {daysUntilTrip > 0
@@ -113,10 +118,15 @@ const TripInfo = ({ trip }) => {
                     ? "Departing today!"
                     : "Trip in progress"}
               </p>
+
               <p className="text-sm text-blue-700">{tripDuration} day trip</p>
             </div>
           </div>
-          <Badge variant={daysUntilTrip > 0 ? "secondary" : "default"}>
+
+          <Badge
+            variant={daysUntilTrip > 0 ? "secondary" : "default"}
+            className="w-fit"
+          >
             {daysUntilTrip > 0
               ? "Upcoming"
               : daysUntilTrip === 0
@@ -125,60 +135,67 @@ const TripInfo = ({ trip }) => {
           </Badge>
         </div>
 
-        {/* Dates */}
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="flex items-center space-x-3 p-4 border rounded-lg">
-            <Calendar className="h-6 w-6 text-green-600" />
-            <div>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="flex items-center space-x-3 rounded-lg border p-4">
+            <Calendar className="h-6 w-6 shrink-0 text-green-600" />
+
+            <div className="min-w-0">
               <p className="font-semibold">Start Date</p>
               <p className="text-gray-600">{formatDate(trip.startDate)}</p>
             </div>
           </div>
-          <div className="flex items-center space-x-3 p-4 border rounded-lg">
-            <Calendar className="h-6 w-6 text-red-600" />
-            <div>
+
+          <div className="flex items-center space-x-3 rounded-lg border p-4">
+            <Calendar className="h-6 w-6 shrink-0 text-red-600" />
+
+            <div className="min-w-0">
               <p className="font-semibold">End Date</p>
               <p className="text-gray-600">{formatDate(trip.endDate)}</p>
             </div>
           </div>
         </div>
 
-        {/* Destinations */}
         <div className="border-b-2 pb-8">
-          <div className="flex items-center space-x-2 mb-3">
+          <div className="mb-3 flex items-center space-x-2">
             <MapPin className="h-5 w-5 text-blue-600" />
             <h3 className="text-lg font-semibold">Destinations</h3>
           </div>
+
           <div className="flex flex-wrap gap-2">
             {trip.destinations.map((destination, index) => (
-              <Badge key={index} variant="outline" className="px-3 py-1">
+              <Badge
+                key={index}
+                variant="outline"
+                className="max-w-full px-3 py-1 wrap-break-word"
+              >
                 {destination}
               </Badge>
             ))}
           </div>
         </div>
 
-        {/* Budget Overview */}
         <div>
-          <div className="flex items-center space-x-2 mb-4">
+          <div className="mb-4 flex items-center space-x-2">
             <DollarSign className="h-5 w-5 text-green-600" />
             <h3 className="text-lg font-semibold">Budget Overview</h3>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-4 mb-4">
-            <div className="text-center p-4 bg-gray-50 rounded-lg">
+          <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div className="rounded-lg bg-gray-50 p-4 text-center">
               <p className="text-sm text-gray-600">Total Budget</p>
               <p className="text-2xl font-bold text-gray-900">
                 ${trip.budget.total}
               </p>
             </div>
-            <div className="text-center p-4 bg-red-50 rounded-lg">
+
+            <div className="rounded-lg bg-red-50 p-4 text-center">
               <p className="text-sm text-gray-600">Spent</p>
               <p className="text-2xl font-bold text-red-600">
                 ${trip.budget.spent}
               </p>
             </div>
-            <div className="text-center p-4 bg-green-50 rounded-lg">
+
+            <div className="rounded-lg bg-green-50 p-4 text-center">
               <p className="text-sm text-gray-600">Remaining</p>
               <p className="text-2xl font-bold text-green-600">
                 ${remainingBudget}
@@ -191,52 +208,57 @@ const TripInfo = ({ trip }) => {
               <span>Budget Progress</span>
               <span>{budgetProgress.toFixed(1)}%</span>
             </div>
+
             <Progress value={budgetProgress} className="h-2" />
           </div>
         </div>
 
-        {/* Recent Expenses */}
         {trip.budget.expenses.length > 0 && (
           <div>
-            <h4 className="font-semibold mb-3">Recent Expenses</h4>
+            <h4 className="mb-3 font-semibold">Recent Expenses</h4>
+
             <div className="space-y-2">
               {trip.budget.expenses.map((expense, index) => (
                 <div
                   key={index}
-                  className="flex justify-between items-center p-3 bg-gray-50 rounded-lg"
+                  className="flex flex-col gap-2 rounded-lg bg-gray-50 p-3 sm:flex-row sm:items-center sm:justify-between"
                 >
-                  <div>
-                    <p className="font-medium">{expense.name}</p>
+                  <div className="min-w-0">
+                    <p className="wrap-break-word font-medium">{expense.name}</p>
+
                     <p className="text-sm text-gray-600">
                       {new Date(expense.date).toLocaleString()}
                     </p>
                   </div>
-                  <p className="font-semibold">${expense.amount}</p>
+
+                  <p className="font-semibold sm:shrink-0">${expense.amount}</p>
                 </div>
               ))}
             </div>
           </div>
         )}
 
-        {/* Collaborators */}
         {trip.collaborators.length > 0 && (
           <div>
-            <div className="flex items-center space-x-2 mb-3">
+            <div className="mb-3 flex items-center space-x-2">
               <Users className="h-5 w-5 text-purple-600" />
               <h3 className="text-lg font-semibold">Collaborators</h3>
             </div>
-            <div className="grid md:grid-cols-2 gap-3">
+
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
               {trip.collaborators.map((member, index) => (
                 <div
                   key={index}
-                  className="flex items-center space-x-4 p-2 bg-gray-50 rounded-lg"
+                  className="flex min-w-0 items-center space-x-4 rounded-lg bg-gray-50 p-2"
                 >
-                  <div className="p-2 bg-amber-400 rounded-full">
-                    <User className="w-4 h-4" />
+                  <div className="shrink-0 rounded-full bg-amber-400 p-2">
+                    <User className="h-4 w-4" />
                   </div>
-                  <div>
-                    <p className="text-sm">{member.name}</p>
-                    <span className="text-xs text-gray-400">
+
+                  <div className="min-w-0">
+                    <p className="text-sm wrap-break-word">{member.name}</p>
+
+                    <span className="block truncate text-xs text-gray-400">
                       {member.email}
                     </span>
                   </div>
@@ -245,51 +267,6 @@ const TripInfo = ({ trip }) => {
             </div>
           </div>
         )}
-
-        {/* Files */}
-        {/* {trip.files.length > 0 && (
-                        <div>
-                            <div className="flex items-center space-x-2 mb-3">
-                                <FileText className="h-5 w-5 text-orange-600" />
-                                <h3 className="text-lg font-semibold">Files & Documents</h3>
-                            </div>
-                            <div className="grid md:grid-cols-2 gap-3">
-                                {trip.files.map((file, index) => {
-                                    if (checkImage(file.url)) {
-                                        return (
-                                            <div key={index} className='relative'>
-                                                <img src={file.url} alt={file._id} className='w-full' />
-
-                                                <Button variant="icon" className="absolute top-4 right-4  text-red-600 hover:text-white hover:bg-red-500" onClick={() => deleteFile(file.publicId)}>
-                                                    <Trash2 className="h-4 w-4" />
-                                                </Button>
-                                            </div>
-                                        )
-                                    }
-                                    else {
-                                        return (
-                                            <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
-                                                <div className="flex items-center space-x-2">
-                                                    <FileText className="h-4 w-4 text-gray-400" />
-                                                    <span className="text-xs">{file._id}</span>
-                                                </div>
-                                                <a href={file.url} target='_blank'>
-                                                    <Button variant="ghost" size="sm">
-                                                        <ExternalLink className="h-4 w-4" />
-                                                    </Button>
-                                                </a>
-                                            </div>
-                                        )
-                                    }
-
-                                }
-
-                                )
-
-                                }
-                            </div>
-                        </div>
-                    )} */}
       </CardContent>
     </Card>
   );

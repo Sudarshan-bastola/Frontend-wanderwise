@@ -1,4 +1,3 @@
-
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import api from "../api/axios";
@@ -31,8 +30,10 @@ const AcceptInvitation = () => {
   };
 
   return (
-    <div className="py-24 flex justify-center">
-      <Button onClick={accept}>Accept</Button>
+    <div className="flex min-h-[50vh] items-center justify-center px-4 py-16 sm:px-6 sm:py-24">
+      <Button onClick={accept} className="w-full max-w-xs sm:w-auto">
+        Accept
+      </Button>
     </div>
   );
 };

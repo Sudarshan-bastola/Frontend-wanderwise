@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 const EditTrip = () => {
   const { id } = useParams();
   const [trip, setTrip] = useState(null);
+
   useEffect(() => {
     const fetchTrips = async () => {
       try {
@@ -21,11 +22,15 @@ const EditTrip = () => {
   }, []);
 
   if (!trip) {
-    return <div>loading</div>;
+    return (
+      <div className="flex min-h-[50vh] items-center justify-center px-4 py-12 text-center text-lg font-semibold sm:text-xl">
+        loading
+      </div>
+    );
   }
 
   return (
-    <div>
+    <div className="w-full px-0 sm:px-2 md:px-4">
       <TripForm
         tripDetails={{
           ...trip,

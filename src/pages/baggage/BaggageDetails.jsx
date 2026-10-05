@@ -98,19 +98,29 @@ const BaggageDetails = () => {
   };
 
   return (
-    <div className="px-20 py-24">
-      <Card>
-        <CardHeader className="border-b">
-          <CardTitle>See Baggages for this trip</CardTitle>
-          <CardDescription>View and manage baggages.</CardDescription>
-          <CardAction>
+    <div className="min-h-screen px-4 py-12 sm:px-6 sm:py-16 md:px-10 md:py-20 lg:px-20 lg:py-24">
+      <Card className="mx-auto w-full max-w-7xl">
+        <CardHeader className="flex flex-col gap-4 border-b px-4 sm:px-6 md:flex-row md:items-center md:justify-between">
+          <div className="min-w-0">
+            <CardTitle className="text-xl sm:text-2xl">
+              See Baggages for this trip
+            </CardTitle>
+
+            <CardDescription className="mt-1 text-sm sm:text-base">
+              View and manage baggages.
+            </CardDescription>
+          </div>
+
+          <CardAction className="w-full md:w-auto">
             <Dialog>
-              <DialogTrigger>
-                <Button>Add Baggage</Button>
+              <DialogTrigger render={<Button className="w-full md:w-auto" />}>
+                Add Baggage
               </DialogTrigger>
-              <DialogContent>
+
+              <DialogContent className="w-[calc(100%-2rem)] max-w-md">
                 <DialogHeader>
                   <DialogTitle>Add Baggage</DialogTitle>
+
                   <DialogDescription>
                     Provide the name of item you want to pack for this trip.
                   </DialogDescription>
@@ -120,7 +130,13 @@ const BaggageDetails = () => {
                   <Label htmlFor="baggageInput" className="mb-2">
                     Name of item
                   </Label>
-                  <Input type="text" placeholder="medicine" id="baggageInput" />
+
+                  <Input
+                    type="text"
+                    placeholder="medicine"
+                    id="baggageInput"
+                    className="w-full"
+                  />
                 </div>
 
                 <Button onClick={addBaggage} className="w-full">
@@ -131,32 +147,37 @@ const BaggageDetails = () => {
           </CardAction>
         </CardHeader>
 
-        <CardContent>
-          <div className="grid grid-cols-3 gap-6">
+        <CardContent className="px-4 py-6 sm:px-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
             {baggages.length == 0 ? (
-              <div className="text-xl font-semibold">
+              <div className="col-span-full py-10 text-center text-lg font-semibold sm:text-xl">
                 No baggages to show, create one first.
               </div>
             ) : (
               baggages.map((item) => {
                 return (
                   <div
-                    className={`border rounded p-4 flex items-center justify-between ${item.completed ? "bg-green-100" : "bg-red-100"}`}
+                    key={item._id}
+                    className={`flex min-w-0 items-center justify-between gap-3 rounded border p-4 ${
+                      item.completed ? "bg-green-100" : "bg-red-100"
+                    }`}
                   >
-                    <div className="flex items-center gap-2">
+                    <div className="flex min-w-0 items-center gap-2">
                       <Checkbox
                         onCheckedChange={() => {
                           onCheck(item._id, item.completed);
                         }}
                         checked={item.completed}
                       />
-                      <p className="text-lg font-medium">{item.name} </p>
+
+                      <p className="wrap-break-word text-base font-medium sm:text-lg">
+                        {item.name}
+                      </p>
                     </div>
 
-                    <div className="space-x-1">
+                    <div className="flex shrink-0 gap-1">
                       <Button variant="outline" size="icon">
-                        {" "}
-                        <SquarePen />{" "}
+                        <SquarePen />
                       </Button>
 
                       <Button
@@ -175,8 +196,11 @@ const BaggageDetails = () => {
             )}
           </div>
         </CardContent>
-        <CardFooter>
-          <p>Total Baggages: {baggages.length} </p>
+
+        <CardFooter className="px-4 sm:px-6">
+          <p className="text-sm sm:text-base">
+            Total Baggages: {baggages.length}
+          </p>
         </CardFooter>
       </Card>
     </div>

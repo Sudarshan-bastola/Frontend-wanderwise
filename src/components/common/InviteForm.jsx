@@ -55,14 +55,22 @@ const InviteForm = ({ trip }) => {
   };
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)}>
-      <Card>
-        <CardHeader className="border-b">
-          <CardTitle>Invite Collaborators</CardTitle>
-          <CardDescription>Enter email address of collaborator</CardDescription>
-          <CardAction>
+    <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+      <Card className="w-full">
+        <CardHeader className="flex flex-col gap-3 border-b px-4 py-4 sm:px-6 md:flex-row md:items-center md:justify-between">
+          <div>
+            <CardTitle className="text-lg sm:text-xl">
+              Invite Collaborators
+            </CardTitle>
+            <CardDescription className="text-sm">
+              Enter email address of collaborator
+            </CardDescription>
+          </div>
+
+          <CardAction className="w-full md:w-auto">
             <Button
               type="button"
+              className="w-full md:w-auto"
               onClick={() => {
                 append("");
               }}
@@ -71,10 +79,12 @@ const InviteForm = ({ trip }) => {
             </Button>
           </CardAction>
         </CardHeader>
-        <CardContent className={"space-y-2"}>
+
+        <CardContent className="space-y-4 px-4 py-4 sm:px-6">
           {fields.map((field, index) => {
             return (
               <Controller
+                key={field.id}
                 name={`collaborators.${index}`}
                 control={form.control}
                 render={({ field, fieldState }) => (
@@ -86,6 +96,7 @@ const InviteForm = ({ trip }) => {
                       type="email"
                       placeholder="abc@gmail.com"
                       aria-invalid={fieldState.invalid}
+                      className="w-full"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -96,8 +107,9 @@ const InviteForm = ({ trip }) => {
             );
           })}
         </CardContent>
-        <CardFooter>
-          <Button className={"w-full"} type="submit">
+
+        <CardFooter className="px-4 py-4 sm:px-6">
+          <Button className="w-full" type="submit">
             Submit
           </Button>
         </CardFooter>

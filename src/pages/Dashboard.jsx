@@ -42,8 +42,14 @@ const statusStyles = {
     label: "Completed",
     className: "bg-emerald-100 text-emerald-700",
   },
-  upcoming: { label: "Upcoming", className: "bg-amber-100 text-amber-700" },
-  ongoing: { label: "Ongoing", className: "bg-sky-100 text-sky-700" },
+  upcoming: {
+    label: "Upcoming",
+    className: "bg-amber-100 text-amber-700",
+  },
+  ongoing: {
+    label: "Ongoing",
+    className: "bg-sky-100 text-sky-700",
+  },
 };
 
 const Dashboard = () => {
@@ -73,9 +79,11 @@ const Dashboard = () => {
       upcoming: 0,
       ongoing: 0,
     };
+
     trips.forEach((trip) => {
       summary[getTripStatus(trip)] += 1;
     });
+
     return summary;
   }, [trips]);
 
@@ -96,9 +104,11 @@ const Dashboard = () => {
     () => [...new Set(trips.flatMap((trip) => trip.destinations || []))],
     [trips],
   );
+
   const budgetProgress = budgetSummary.total
     ? Math.min((budgetSummary.spent / budgetSummary.total) * 100, 100)
     : 0;
+
   const statCards = [
     {
       label: "Total trips",
@@ -127,32 +137,34 @@ const Dashboard = () => {
   ];
 
   return (
-    <main className="min-h-screen bg-purple-50/60 px-5 py-10 sm:px-10 lg:px-20">
-      <div className="mx-auto max-w-7xl space-y-8">
+    <main className="min-h-screen bg-purple-50/60 px-4 py-8 sm:px-6 sm:py-10 md:px-10 lg:px-20">
+      <div className="mx-auto max-w-7xl space-y-6 sm:space-y-8">
         <div>
-          <p className="mb-2 text-sm font-medium uppercase tracking-widest text-purple-600">
+          <p className="mb-2 text-xs font-medium uppercase tracking-widest text-purple-600 sm:text-sm">
             Your travel overview
           </p>
-          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl">
             Welcome to your dashboard
           </h1>
-          <p className="mt-2 text-muted-foreground">
+          <p className="mt-2 text-sm text-muted-foreground sm:text-base">
             Keep an eye on every journey, budget, and destination.
           </p>
         </div>
 
         <section
-          className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4"
           aria-label="Trip summary"
         >
           {statCards.map(({ label, value, icon: Icon, color }) => (
             <Card key={label} className="border-0 shadow-sm">
-              <CardContent className="flex items-center justify-between p-5">
-                <div>
+              <CardContent className="flex items-center justify-between gap-4 p-4 sm:p-5">
+                <div className="min-w-0">
                   <p className="text-sm text-muted-foreground">{label}</p>
-                  <p className="mt-2 text-3xl font-semibold">{value}</p>
+                  <p className="mt-2 text-2xl font-semibold sm:text-3xl">
+                    {value}
+                  </p>
                 </div>
-                <div className={`rounded-xl p-3 ${color}`}>
+                <div className={`shrink-0 rounded-xl p-3 ${color}`}>
                   <Icon className="size-5" />
                 </div>
               </CardContent>
@@ -169,10 +181,10 @@ const Dashboard = () => {
           </div>
         ) : trips.length === 0 ? (
           <Card className="border-0 text-center shadow-sm">
-            <CardContent className="py-20">
+            <CardContent className="px-4 py-16 sm:py-20">
               <Compass className="mx-auto mb-4 size-10 text-purple-500" />
               <h2 className="text-xl font-semibold">No trips yet</h2>
-              <p className="mt-2 text-muted-foreground">
+              <p className="mt-2 text-sm text-muted-foreground sm:text-base">
                 Create your first trip to see your travel overview.
               </p>
               <a
@@ -185,45 +197,55 @@ const Dashboard = () => {
           </Card>
         ) : (
           <>
-            <section className="grid gap-6 lg:grid-cols-2">
+            <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               <Card className="border-0 shadow-sm">
-                <CardHeader className="border-b">
+                <CardHeader className="border-b px-4 sm:px-6">
                   <CardTitle>Trip timeline</CardTitle>
-                  <CardDescription>
+                  <CardDescription className="text-sm sm:text-base">
                     Your journeys, ordered by departure date
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="max-h-124 overflow-y-auto p-6">
-                  <div className="relative space-y-6 before:absolute before:bottom-2 before:left-1.75 before:top-2 before:w-px before:bg-purple-200">
+
+                <CardContent className="max-h-124 overflow-y-auto px-4 py-5 sm:p-6">
+                  <div className="relative space-y-5 before:absolute before:bottom-2 before:left-1.75 before:top-2 before:w-px before:bg-purple-200 sm:space-y-6">
                     {[...trips]
                       .sort(
                         (a, b) => new Date(a.startDate) - new Date(b.startDate),
                       )
                       .map((trip) => {
                         const status = statusStyles[getTripStatus(trip)];
+
                         return (
                           <a
                             href={`/trips/${trip._id}`}
                             key={trip._id}
-                            className="group relative flex gap-4 pl-1"
+                            className="group relative flex gap-3 pl-1 sm:gap-4"
                           >
                             <span className="z-10 mt-1.5 size-3 shrink-0 rounded-full border-2 border-white bg-purple-600 ring-1 ring-purple-300" />
-                            <div className="min-w-0 flex-1 rounded-lg border p-4 transition-colors group-hover:border-purple-300 group-hover:bg-purple-50/50">
-                              <div className="flex flex-wrap items-start justify-between gap-2">
-                                <h3 className="font-semibold">{trip.title}</h3>
-                                <Badge className={status.className}>
+
+                            <div className="min-w-0 flex-1 rounded-lg border p-3 transition-colors group-hover:border-purple-300 group-hover:bg-purple-50/50 sm:p-4">
+                              <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between">
+                                <h3 className="min-w-0 wrap-break-word font-semibold">
+                                  {trip.title}
+                                </h3>
+
+                                <Badge className={`w-fit ${status.className}`}>
                                   {status.label}
                                 </Badge>
                               </div>
-                              <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
-                                <CalendarDays className="size-4" />
+
+                              <p className="mt-2 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground sm:text-sm">
+                                <CalendarDays className="size-4 shrink-0" />
                                 {formatDate(trip.startDate)} -{" "}
                                 {formatDate(trip.endDate)}
                               </p>
-                              <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
-                                <MapPin className="size-4" />
-                                {(trip.destinations || []).join(", ") ||
-                                  "No destination added"}
+
+                              <p className="mt-2 flex items-start gap-1.5 text-xs text-muted-foreground sm:text-sm">
+                                <MapPin className="mt-0.5 size-4 shrink-0" />
+                                <span className="wrap-break-word">
+                                  {(trip.destinations || []).join(", ") ||
+                                    "No destination added"}
+                                </span>
                               </p>
                             </div>
                           </a>
@@ -234,37 +256,42 @@ const Dashboard = () => {
               </Card>
 
               <Card className="border-0 shadow-sm">
-                <CardHeader className="border-b">
+                <CardHeader className="border-b px-4 sm:px-6">
                   <CardTitle className="flex items-center gap-2">
-                    <WalletCards className="size-5 text-purple-600" />
+                    <WalletCards className="size-5 shrink-0 text-purple-600" />
                     Total budget
                   </CardTitle>
-                  <CardDescription>
+                  <CardDescription className="text-sm sm:text-base">
                     Combined budget across all your trips
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-7 p-6">
-                  <div className="flex items-end justify-between gap-4">
+
+                <CardContent className="space-y-6 px-4 py-5 sm:space-y-7 sm:p-6">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                     <div>
                       <p className="text-sm text-muted-foreground">Spent</p>
-                      <p className="mt-1 text-3xl font-semibold">
+                      <p className="mt-1 text-2xl font-semibold sm:text-3xl">
                         {currencyFormatter.format(budgetSummary.spent)}
                       </p>
                     </div>
-                    <div className="text-right">
+
+                    <div className="sm:text-right">
                       <p className="text-sm text-muted-foreground">
                         Total budget
                       </p>
-                      <p className="mt-1 text-xl font-medium">
+                      <p className="mt-1 text-lg font-medium sm:text-xl">
                         {currencyFormatter.format(budgetSummary.total)}
                       </p>
                     </div>
                   </div>
+
                   <Progress value={budgetProgress} className="gap-2" />
-                  <div className="flex justify-between text-sm">
+
+                  <div className="flex flex-col gap-2 text-sm sm:flex-row sm:items-center sm:justify-between">
                     <span className="text-muted-foreground">
                       {budgetProgress.toFixed(0)}% used
                     </span>
+
                     <span className="font-medium text-emerald-600">
                       {currencyFormatter.format(
                         Math.max(budgetSummary.total - budgetSummary.spent, 0),
@@ -272,7 +299,8 @@ const Dashboard = () => {
                       remaining
                     </span>
                   </div>
-                  <div className="rounded-lg bg-purple-50 p-4 text-sm text-muted-foreground">
+
+                  <div className="rounded-lg bg-purple-50 p-3 text-sm text-muted-foreground sm:p-4">
                     Your spending is based on the expense totals recorded for
                     every trip.
                   </div>
@@ -281,22 +309,23 @@ const Dashboard = () => {
             </section>
 
             <Card className="border-0 shadow-sm">
-              <CardHeader className="border-b">
+              <CardHeader className="border-b px-4 sm:px-6">
                 <CardTitle>Destinations</CardTitle>
-                <CardDescription>
+                <CardDescription className="text-sm sm:text-base">
                   Every place included in your trips
                 </CardDescription>
               </CardHeader>
-              <CardContent className="flex flex-wrap gap-2 p-6">
+
+              <CardContent className="flex flex-wrap gap-2 px-4 py-5 sm:p-6">
                 {destinations.length ? (
                   destinations.map((destination) => (
                     <Badge
                       key={destination}
                       variant="outline"
-                      className="h-8 rounded-full px-3 text-sm"
+                      className="h-8 max-w-full rounded-full px-3 text-sm"
                     >
-                      <MapPin className="size-3.5" />
-                      {destination}
+                      <MapPin className="size-3.5 shrink-0" />
+                      <span className="wrap-break-word">{destination}</span>
                     </Badge>
                   ))
                 ) : (

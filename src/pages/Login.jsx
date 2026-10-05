@@ -63,47 +63,134 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full h-dvh pt-30 bg-emerald-800">
-      <div className="w-1/2 mx-auto bg-white rounded-lg grid grid-cols-2 h-60dvh overflow-hidden">
-        <div className="w-full overflow-hidden">
-          <img
-            src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="wanderwise login page"
-          />
-        </div>
+    <div className="min-h-dvh w-full bg-emerald-800 md:pt-30">
+      <div className="hidden md:block">
+        <div className="mx-auto grid h-[60dvh] w-1/2 grid-cols-2 overflow-hidden rounded-lg bg-white">
+          <div className="w-full overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              alt="wanderwise login page"
+              className="h-full w-full object-cover"
+            />
+          </div>
 
-        <div>
-          <form className="h-full" onSubmit={form.handleSubmit(onSubmit)}>
-            <Card className="h-full flex flex-col justify-evenly">
-              <CardHeader>
-                <CardTitle>Login to Wanderwise</CardTitle>
-                <CardDescription>
-                  Enter your credentials to continue.
-                </CardDescription>
-                <CardAction>
-                  <img
-                    src="/wanderwiseLogo.png"
-                    alt="wanderwise logo"
-                    className="w-12"
+          <div>
+            <form className="h-full" onSubmit={form.handleSubmit(onSubmit)}>
+              <Card className="flex h-full flex-col justify-evenly">
+                <CardHeader>
+                  <CardTitle>Login to Wanderwise</CardTitle>
+                  <CardDescription>
+                    Enter your credentials to continue.
+                  </CardDescription>
+                  <CardAction>
+                    <img
+                      src="/wanderwiseLogo.png"
+                      alt="wanderwise logo"
+                      className="w-12"
+                    />
+                  </CardAction>
+                </CardHeader>
+
+                <CardContent className="space-y-4">
+                  <Controller
+                    name="email"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor={field.name}>
+                          Enter your email
+                        </FieldLabel>
+                        <Input
+                          {...field}
+                          id={field.name}
+                          type="email"
+                          placeholder="abc@gmail.com"
+                          aria-invalid={fieldState.invalid}
+                        />
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </Field>
+                    )}
                   />
-                </CardAction>
+
+                  <Controller
+                    name="password"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor={field.name}>
+                          Enter your password
+                        </FieldLabel>
+                        <Input
+                          {...field}
+                          id={field.name}
+                          type="password"
+                          placeholder="********"
+                          aria-invalid={fieldState.invalid}
+                        />
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </Field>
+                    )}
+                  />
+                </CardContent>
+
+                <CardFooter className="flex flex-col">
+                  <Button type="submit" className="mb-4 w-full">
+                    Login
+                  </Button>
+
+                  <p>
+                    Don't have an account? <a href="/register">Register</a>
+                  </p>
+                </CardFooter>
+              </Card>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex min-h-dvh items-center justify-center px-4 py-8 md:hidden">
+        <div className="w-full max-w-md">
+          <div className="mb-8 flex flex-col items-center text-center">
+            <img
+              src="/wanderwiseLogo.png"
+              alt="wanderwise logo"
+              className="mb-5 w-20"
+            />
+
+            <h1 className="text-3xl font-bold text-white">Welcome back</h1>
+
+            <p className="mt-2 text-sm text-emerald-100">
+              Login to continue your journey with Wanderwise.
+            </p>
+          </div>
+
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <Card className="w-full rounded-2xl border-0 shadow-xl">
+              <CardHeader className="px-5 pt-6">
+                <CardTitle className="text-xl">Login to your account</CardTitle>
+                <CardDescription>Enter your credentials below.</CardDescription>
               </CardHeader>
 
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-5 px-5">
                 <Controller
                   name="email"
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name}>
-                        Enter your email
+                      <FieldLabel htmlFor={`mobile-${field.name}`}>
+                        Email
                       </FieldLabel>
                       <Input
                         {...field}
-                        id={field.name}
+                        id={`mobile-${field.name}`}
                         type="email"
                         placeholder="abc@gmail.com"
                         aria-invalid={fieldState.invalid}
+                        className="h-11"
                       />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
@@ -117,15 +204,16 @@ const Login = () => {
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name}>
-                        Enter your password
+                      <FieldLabel htmlFor={`mobile-${field.name}`}>
+                        Password
                       </FieldLabel>
                       <Input
                         {...field}
-                        id={field.name}
+                        id={`mobile-${field.name}`}
                         type="password"
                         placeholder="********"
                         aria-invalid={fieldState.invalid}
+                        className="h-11"
                       />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
@@ -135,13 +223,19 @@ const Login = () => {
                 />
               </CardContent>
 
-              <CardFooter className={"flex flex-col"}>
-                <Button type="submit" className={"w-full mb-4"}>
+              <CardFooter className="flex flex-col px-5 pb-6">
+                <Button type="submit" className="mb-5 h-11 w-full">
                   Login
                 </Button>
 
-                <p>
-                  Don't have an account? <a href="/register"> Register</a>
+                <p className="text-center text-sm">
+                  Don't have an account?{" "}
+                  <a
+                    href="/register"
+                    className="font-medium text-purple-600 hover:underline"
+                  >
+                    Register
+                  </a>
                 </p>
               </CardFooter>
             </Card>

@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import {
   Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from "../../components/ui/card";
 import ExpenseForm from "../../components/common/ExpenseForm";
 import { useParams } from "react-router-dom";
@@ -32,20 +29,21 @@ const TripDetails = () => {
   }, []);
 
   if (!trip) {
-    return <div>loading</div>;
+    return (
+      <div className="flex min-h-[50vh] items-center justify-center px-4 py-12 text-center text-lg font-semibold sm:text-xl">
+        loading
+      </div>
+    );
   }
 
   return (
-    <div className="px-20 py-8 flex gap-4">
-      {/* left part  */}
-      <Card className="w-3/4">
+    <div className="flex w-full flex-col gap-6 px-4 py-8 sm:px-6 sm:py-12 md:px-10 lg:px-20 lg:py-16 xl:flex-row">
+      <Card className="w-full xl:w-3/4">
         <TripInfo trip={trip} />
       </Card>
 
-      {/* right part  */}
-      <div className="w-1/4">
+      <div className="flex w-full flex-col gap-6 xl:w-1/4">
         <ExpenseForm trip={trip} />
-
         <InviteForm trip={trip} />
       </div>
     </div>

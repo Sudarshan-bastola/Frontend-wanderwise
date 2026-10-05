@@ -18,7 +18,6 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useNavigate } from "react-router-dom";
@@ -61,14 +60,21 @@ const Trip = () => {
   };
 
   return (
-    <div className="px-20 py-20">
-      <Card>
-        <CardHeader className="border-b">
-          <CardTitle>See your trips</CardTitle>
-          <CardDescription>View and manage all your trips</CardDescription>
-          <CardAction>
-            <a href="/trips/add">
-              <Button>
+    <div className="min-h-screen px-4 py-12 sm:px-6 sm:py-16 md:px-10 md:py-20 lg:px-20 lg:py-24">
+      <Card className="mx-auto w-full max-w-7xl">
+        <CardHeader className="flex flex-col gap-4 border-b px-4 sm:px-6 md:flex-row md:items-center md:justify-between">
+          <div className="min-w-0">
+            <CardTitle className="text-xl sm:text-2xl">
+              See your trips
+            </CardTitle>
+            <CardDescription className="text-sm sm:text-base">
+              View and manage all your trips
+            </CardDescription>
+          </div>
+
+          <CardAction className="w-full md:w-auto">
+            <a href="/trips/add" className="block w-full md:w-auto">
+              <Button className="w-full md:w-auto">
                 <Plus />
                 Add Trip
               </Button>
@@ -76,31 +82,39 @@ const Trip = () => {
           </CardAction>
         </CardHeader>
 
-        <CardContent>
-          <div className="grid grid-cols-3 gap-6">
+        <CardContent className="px-4 py-6 sm:px-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
             {trips.length == 0 ? (
-              <div className="text-3xl font-semibold text-center py-20">
+              <div className="col-span-full px-4 py-16 text-center text-xl font-semibold sm:py-20 sm:text-2xl md:text-3xl">
                 You do not have any trips to show. Create a new trip first.
               </div>
             ) : (
               trips.map((trip) => {
                 return (
-                  <Card key={trip._id}>
-                    <CardHeader className="border-b">
-                      <CardTitle>{trip.title}</CardTitle>
-                      <CardDescription>
-                        {formatDate(trip.startDate)} - {formatDate(trip.endDate)}
-                      </CardDescription>
-                      <CardAction>
+                  <Card key={trip._id} className="min-w-0">
+                    <CardHeader className="flex flex-row items-start justify-between gap-3 border-b px-4 sm:px-6">
+                      <div className="min-w-0">
+                        <CardTitle className="wrap-break-word text-lg sm:text-xl">
+                          {trip.title}
+                        </CardTitle>
+                        <CardDescription className="text-sm">
+                          {formatDate(trip.startDate)} -{" "}
+                          {formatDate(trip.endDate)}
+                        </CardDescription>
+                      </div>
+
+                      <CardAction className="shrink-0">
                         <DropdownMenu>
                           <DropdownMenuTrigger
-                            render={<Button variant="outline" />}
+                            render={<Button variant="outline" size="icon" />}
                           >
                             <EllipsisVertical />
                           </DropdownMenuTrigger>
+
                           <DropdownMenuContent>
                             <DropdownMenuGroup>
                               <DropdownMenuLabel>Manage Trip</DropdownMenuLabel>
+
                               <DropdownMenuItem>
                                 <a
                                   className="w-full"
@@ -109,6 +123,7 @@ const Trip = () => {
                                   View
                                 </a>
                               </DropdownMenuItem>
+
                               <DropdownMenuItem>
                                 <a
                                   className="w-full"
@@ -117,6 +132,7 @@ const Trip = () => {
                                   Edit
                                 </a>
                               </DropdownMenuItem>
+
                               <DropdownMenuItem
                                 onClick={() => {
                                   onDelete(trip._id);
@@ -129,12 +145,20 @@ const Trip = () => {
                         </DropdownMenu>
                       </CardAction>
                     </CardHeader>
-                    <CardContent className="flex gap-40">
-                      <p>Budget: Rs. {trip.budget.total}</p>
-                      <p>Spent: Rs. {trip.budget.spent}</p>
+
+                    <CardContent className="flex flex-col gap-2 px-4 py-4 sm:px-6 sm:py-5">
+                      <p className="wrap-break-word">
+                        Budget: Rs. {trip.budget.total}
+                      </p>
+                      <p className="wrap-break-word">
+                        Spent: Rs. {trip.budget.spent}
+                      </p>
                     </CardContent>
-                    <CardFooter>
-                      <p>Destinations: {trip.destinations.join(", ")}.</p>
+
+                    <CardFooter className="px-4 pb-4 sm:px-6">
+                      <p className="wrap-break-word">
+                        Destinations: {trip.destinations.join(", ")}.
+                      </p>
                     </CardFooter>
                   </Card>
                 );
@@ -143,8 +167,10 @@ const Trip = () => {
           </div>
         </CardContent>
 
-        <CardFooter>
-          <p className="text-gray-500">Total trips : { trips.length}</p>
+        <CardFooter className="px-4 sm:px-6">
+          <p className="text-sm text-gray-500 sm:text-base">
+            Total trips : {trips.length}
+          </p>
         </CardFooter>
       </Card>
     </div>
