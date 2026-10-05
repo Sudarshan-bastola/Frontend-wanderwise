@@ -17,7 +17,12 @@ import Baggage from "./pages/baggage/Baggage";
 import BaggageDetails from "./pages/baggage/BaggageDetails";
 import AcceptInvitation from "./pages/AcceptInvitation";
 import Contact from "./pages/contact";
-import Register from "./pages/Register";
+
+import Itineraries from "./pages/itinerary/itinerary";
+import Register from "./pages/register";
+import AddItinerary from "./pages/itinerary/AddItinerary";
+import ItineraryDetails from "./pages/itinerary/ItineraryDetails";
+
 
 
 const App = () => {
@@ -69,6 +74,10 @@ const App = () => {
 
           <Route path="/baggage" element={<Baggage />} />
           <Route path="/baggage/:id" element={<BaggageDetails />} />
+
+          <Route path="/itineraries" element={<Itineraries />} />
+          <Route path="/itineraries/add" element={<AddItinerary />} />
+          <Route path="/itineraries/:id" element={<ItineraryDetails />} />
 
           <Route
             path="/trips/:id/invite/accept"
