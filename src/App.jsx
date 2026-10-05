@@ -1,10 +1,7 @@
-
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Landing from "./pages/Landing";
 import About from "./pages/About";
-
 import Login from "./pages/Login";
-
 import useAuth from "./hooks/useAuth";
 import { jwtDecode } from "jwt-decode";
 import Dashboard from "./pages/Dashboard";
@@ -17,13 +14,10 @@ import Baggage from "./pages/baggage/Baggage";
 import BaggageDetails from "./pages/baggage/BaggageDetails";
 import AcceptInvitation from "./pages/AcceptInvitation";
 import Contact from "./pages/contact";
-
 import Itineraries from "./pages/itinerary/itinerary";
 import Register from "./pages/register";
 import AddItinerary from "./pages/itinerary/AddItinerary";
 import ItineraryDetails from "./pages/itinerary/ItineraryDetails";
-
-
 
 const App = () => {
   const { token, onLogout } = useAuth();
@@ -35,22 +29,23 @@ const App = () => {
 
       if (decodedToken && decodedToken.exp) {
         const currentTime = Date.now() / 1000;
-        if (currentTime > decodedToken?.exp) {
+
+        if (currentTime > decodedToken.exp) {
           onLogout();
-          return <Navigate to="/login" />;
+          return <Navigate to="/login" replace />;
         }
       }
 
       if (!token || !userId) {
         onLogout();
-        return <Navigate to="/login" />;
+        return <Navigate to="/login" replace />;
       }
 
       return <AppLayout />;
     } catch (err) {
       console.error(err);
       onLogout();
-      return <Navigate to="/login" />;
+      return <Navigate to="/login" replace />;
     }
   };
 
