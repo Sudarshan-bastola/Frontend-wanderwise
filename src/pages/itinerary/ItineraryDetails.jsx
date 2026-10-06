@@ -1,14 +1,28 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api/axios";
 import { toast } from "sonner";
-import ActivityCard from "../../components/common/ActivityCard";
-import { Card,CardContent,CardDescription,CardTitle,CardHeader } from "../../components/ui/card";
+import { Pencil, Trash2 } from "lucide-react";
+import ActivityCard from "../../components/common/ActivityCard"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
+import { Button } from "../../components/ui/button";
 
 
 const ItineraryDetails = () => {
   const { tripId, id } = useParams();
+  const navigate = useNavigate();
   const [itinerary, setItinerary] = useState(null);
+
+  const handleDelete = async () => {
+    try {
+      await api.delete(`/trips/${tripId}/itinerary/${id}`);
+      toast.success("Itinerary deleted successfully");
+      window.location.href = `/trips/${tripId}/itinerary`;
+    } catch (error) {
+      toast.error("Failed to delete itinerary");
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const fetchItinerary = async () => {
@@ -36,13 +50,34 @@ const ItineraryDetails = () => {
     <div className="min-h-screen bg-purple-50/60 px-4 py-8 sm:px-6 sm:py-12 md:px-10 lg:px-20 lg:py-16">
       <Card className="mx-auto w-full max-w-5xl">
         <CardHeader className="border-b px-4 sm:px-6">
-          <CardTitle className="wrap-break-word text-2xl sm:text-3xl">
-            {itinerary.title}
-          </CardTitle>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <CardTitle className="wrap-break-word text-2xl sm:text-3xl">
+                {itinerary.title}
+              </CardTitle>
 
-          <CardDescription className="text-sm sm:text-base">
-            {itinerary.date}
-          </CardDescription>
+              <CardDescription className="text-sm sm:text-base">
+                {itinerary.date}
+              </CardDescription>
+            </div>
+
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={() =>
+                  navigate(`/trips/${tripId}/itinerary/${id}/edit`)
+                }
+              >
+                <Pencil />
+                Edit
+              </Button>
+
+              <Button variant="destructive" onClick={handleDelete}>
+                <Trash2 />
+                Delete
+              </Button>
+            </div>
+          </div>
         </CardHeader>
 
         <CardContent className="space-y-4 px-4 py-6 sm:px-6">

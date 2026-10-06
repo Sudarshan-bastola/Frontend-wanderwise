@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import api from "../../api/axios";
 import { toast } from "sonner";
 import {
@@ -24,8 +23,10 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "../../components/ui/label";
 import { Input } from "../../components/ui/input";
+import { useNavigate, useParams } from "react-router-dom";
 
 const BaggageDetails = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const [baggages, setBaggages] = useState([]);
@@ -48,7 +49,9 @@ const BaggageDetails = () => {
     const name = document.getElementById("baggageInput");
 
     try {
-      const response = await api.post(`/${id}/baggages`, { name: name.value });
+      const response = await api.post(`/${id}/baggages`, {
+        name: name.value,
+      });
 
       if (response.status === 201) {
         toast.success("Baggage added successfully");
@@ -176,7 +179,13 @@ const BaggageDetails = () => {
                     </div>
 
                     <div className="flex shrink-0 gap-1">
-                      <Button variant="outline" size="icon">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() =>
+                          navigate(`/baggage/edit/${id}/${item._id}`)
+                        }
+                      >
                         <SquarePen />
                       </Button>
 

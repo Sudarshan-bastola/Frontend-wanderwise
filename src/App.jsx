@@ -14,12 +14,12 @@ import Baggage from "./pages/baggage/Baggage";
 import BaggageDetails from "./pages/baggage/BaggageDetails";
 import AcceptInvitation from "./pages/AcceptInvitation";
 import Contact from "./pages/contact";
-
-
 import AddItinerary from "./pages/itinerary/AddItinerary";
 import ItineraryDetails from "./pages/itinerary/ItineraryDetails";
 import Itineraries from "./pages/itinerary/itinerary";
+import EditBaggage from "./pages/baggage/EditBaggage";
 import Register from "./pages/Register";
+import EditItinerary from "./pages/itinerary/EditItinerary";
 
 
 const App = () => {
@@ -72,6 +72,10 @@ const App = () => {
 
           <Route path="/baggage" element={<Baggage />} />
           <Route path="/baggage/:id" element={<BaggageDetails />} />
+          <Route
+            path="/baggage/edit/:tripId/:baggageId"
+            element={<EditBaggage />}
+          />
 
           <Route path="/trips/:tripId/itinerary" element={<Itineraries />} />
 
@@ -83,6 +87,11 @@ const App = () => {
           <Route
             path="/trips/:tripId/itinerary/:id"
             element={<ItineraryDetails />}
+          />
+
+          <Route
+            path="/trips/:tripId/itinerary/:id/edit"
+            element={<EditItinerary />}
           />
 
           <Route

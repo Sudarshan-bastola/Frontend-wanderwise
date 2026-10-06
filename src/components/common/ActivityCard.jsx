@@ -32,16 +32,6 @@ const ActivityCard = ({ activity }) => {
             </p>
           )}
         </div>
-
-        <div className="flex w-full gap-2 sm:w-auto">
-          <Button variant="outline" className="flex-1 sm:flex-none">
-            Edit
-          </Button>
-
-          <Button variant="destructive" className="flex-1 sm:flex-none">
-            Delete
-          </Button>
-        </div>
       </CardContent>
     </Card>
   );
